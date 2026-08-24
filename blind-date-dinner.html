@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Blind Date Dinner, Maastricht</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFF8FA;
+    --white:#FFFFFF;
+    --ink:#2B0A12;
+    --red:#E0223F;
+    --red-dark:#AE1330;
+    --pink:#FF7FA6;
+    --pink-soft:#FFE0EA;
+    --pink-softer:#FFF0F5;
+    --line: rgba(43,10,18,0.10);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.55;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{ font-family:'Fraunces', serif; font-weight:600; letter-spacing:-0.01em; }
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--red);
+  }
+  a{color:inherit;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- reveal-on-scroll ---------- */
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity 0.7s cubic-bezier(.2,.7,.2,1), transform 0.7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+  .reveal.d1{ transition-delay:0.08s; }
+  .reveal.d2{ transition-delay:0.16s; }
+  .reveal.d3{ transition-delay:0.24s; }
+  .reveal.d4{ transition-delay:0.32s; }
+  .reveal.d5{ transition-delay:0.4s; }
+
+  @keyframes floatY{ 0%,100%{ transform:translateY(0) rotate(var(--r,0deg)); } 50%{ transform:translateY(-14px) rotate(var(--r,0deg)); } }
+  @keyframes pulseRing{ 0%{ box-shadow:0 0 0 0 rgba(224,34,63,0.35); } 100%{ box-shadow:0 0 0 22px rgba(224,34,63,0); } }
+  @keyframes drift{ from{ background-position:0 0; } to{ background-position:200px 0; } }
+
+  /* floating confetti ribbons in hero */
+  .confetti{ position:absolute; border-radius:3px; opacity:0.85; animation:floatY 5s ease-in-out infinite; }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:30;
+    background:rgba(255,248,250,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; height:76px; }
+  .brand{ font-family:'Fraunces', serif; font-weight:700; font-size:1.7rem; display:flex; align-items:center; gap:8px; }
+  .brand svg{ width:22px; height:22px; flex-shrink:0; }
+  .brand em{ color:var(--red); font-style:italic; }
+  .nav-cta{
+    font-family:'Space Mono', monospace; font-size:0.76rem;
+    background:var(--red); color:var(--white); padding:9px 18px;
+    border-radius:999px; text-decoration:none; letter-spacing:0.03em;
+    transition:transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    display:inline-block;
+  }
+  .nav-cta:hover{ background:var(--red-dark); transform:translateY(-2px); box-shadow:0 8px 20px rgba(224,34,63,0.3); }
+
+  /* ---------- HERO ---------- */
+  header.hero{ position:relative; padding:110px 0 100px; overflow:hidden; }
+  .hero-bg-blob{
+    position:absolute; border-radius:50%; filter:blur(60px); opacity:0.5; z-index:0;
+  }
+  .blob1{ width:420px; height:420px; background:var(--pink-soft); top:-160px; right:-120px; }
+  .blob2{ width:300px; height:300px; background:var(--pink-softer); bottom:-140px; left:-100px; }
+
+  .hero-grid{ position:relative; z-index:2; display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center; }
+  .hero h1{ font-size:clamp(2.6rem, 5.5vw, 4.5rem); line-height:0.98; margin:14px 0 22px; }
+  .hero h1 .accent{ color:var(--red); font-style:italic; font-weight:500; }
+  .hero p.lede{ font-size:1.1rem; max-width:440px; color:rgba(43,10,18,0.75); margin-bottom:32px; }
+  .hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn-primary{
+    background:var(--red); color:var(--white); padding:15px 30px; border-radius:999px;
+    text-decoration:none; font-weight:600; font-size:0.96rem;
+    box-shadow:0 10px 26px rgba(224,34,63,0.32);
+    transition:transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    display:inline-block;
+  }
+  .btn-primary:hover{ transform:translateY(-3px) scale(1.02); background:var(--red-dark); box-shadow:0 14px 32px rgba(224,34,63,0.4); }
+  .btn-ghost{
+    border:1.5px solid var(--ink); padding:14px 26px; border-radius:999px;
+    text-decoration:none; font-weight:600; font-size:0.96rem;
+    transition:background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    display:inline-block;
+  }
+  .btn-ghost:hover{ background:var(--ink); color:var(--white); transform:translateY(-3px); }
+
+  .hero-visual{ position:relative; display:flex; align-items:center; justify-content:center; }
+  .bow-card{
+    background:linear-gradient(160deg, var(--red) 0%, var(--pink) 100%);
+    border-radius:24px; width:100%; aspect-ratio:4/5;
+    display:flex; align-items:center; justify-content:center; position:relative;
+    box-shadow:0 30px 70px rgba(224,34,63,0.32);
+    animation:floatY 6s ease-in-out infinite;
+  }
+  .bow-card svg{ width:58%; }
+  .bow-card .ribbon-path{ stroke-dasharray:400; stroke-dashoffset:400; animation:drawIn 2.2s 0.4s ease forwards; }
+  @keyframes drawIn{ to{ stroke-dashoffset:0; } }
+  .stat-chip{
+    position:absolute; background:var(--white); border-radius:14px; padding:12px 16px;
+    box-shadow:0 12px 30px rgba(43,10,18,0.14); font-family:'Space Mono',monospace;
+    animation:floatY 5s ease-in-out infinite;
+  }
+  .stat-chip.one{ top:-18px; right:-24px; left:auto; font-size:0.75rem; --r:-4deg; }
+  .stat-chip.two{ bottom:-16px; right:-20px; font-size:0.75rem; animation-delay:0.6s; --r:3deg; }
+  .stat-chip b{ display:block; font-family:'Fraunces',serif; font-size:1.4rem; color:var(--red); }
+
+  /* ---------- SECTION generic ---------- */
+  section{ position:relative; z-index:2; padding:92px 0; }
+  section h2{ font-size:clamp(1.9rem, 3.2vw, 2.7rem); margin-bottom:14px; }
+  .section-head{ max-width:560px; margin-bottom:52px; }
+  .section-head .eyebrow{ margin-bottom:10px; display:block; }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps{ display:grid; grid-template-columns:repeat(5,1fr); gap:18px; }
+  .step{
+    background:var(--white); border:1px solid var(--line); border-radius:18px; padding:24px 18px;
+    position:relative; transition:transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .step:hover{ transform:translateY(-8px); box-shadow:0 20px 40px rgba(224,34,63,0.14); }
+  .step .num{
+    font-family:'Fraunces',serif; font-style:italic; color:var(--pink);
+    font-size:1.9rem; display:block; margin-bottom:10px;
+  }
+  .step h3{ font-size:1.02rem; margin-bottom:8px; }
+  .step p{ font-size:0.88rem; color:rgba(43,10,18,0.7); }
+
+  /* ---------- THE RITUAL (signature) ---------- */
+  .ritual{ background:linear-gradient(155deg, var(--red) 0%, var(--red-dark) 100%); color:var(--white); border-radius:30px; padding:70px 56px; position:relative; overflow:hidden; }
+  .ritual::after{ content:""; position:absolute; width:340px; height:340px; background:rgba(255,255,255,0.08); border-radius:50%; top:-160px; right:-100px; }
+  .ritual .eyebrow{ color:var(--pink-soft); position:relative; z-index:2; }
+  .ritual h2{ color:var(--white); max-width:640px; position:relative; z-index:2; }
+  .ritual-body{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; margin-top:36px; position:relative; z-index:2; }
+  .ritual-copy p{ color:rgba(255,255,255,0.88); margin-bottom:16px; }
+  .colour-row{ display:flex; gap:10px; margin-top:22px; flex-wrap:wrap; }
+  .swatch{ width:36px; height:36px; border-radius:50%; border:2px solid rgba(255,255,255,0.5); transition:transform 0.25s ease; }
+  .swatch:hover{ transform:scale(1.25) rotate(8deg); }
+
+  /* ---------- MENU ---------- */
+  .menu-card{
+    background:var(--white); border:1px solid var(--line); border-radius:22px;
+    padding:48px 52px; max-width:640px; margin:0 auto;
+    transition:transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .menu-card:hover{ box-shadow:0 24px 50px rgba(224,34,63,0.12); }
+  .menu-card .eyebrow{ text-align:center; display:block; margin-bottom:6px; }
+  .menu-card h2{ text-align:center; margin-bottom:18px; }
+  .menu-intro{ text-align:center; color:rgba(43,10,18,0.72); font-size:0.96rem; margin-bottom:34px; }
+  .menu-row{ display:flex; justify-content:space-between; align-items:baseline; padding:16px 0; border-bottom:1px dashed var(--line); }
+  .menu-row:last-child{ border-bottom:none; }
+  .menu-row .name{ font-family:'Fraunces',serif; font-size:1.08rem; }
+  .menu-row .note{ font-size:0.84rem; color:rgba(43,10,18,0.58); display:block; margin-top:2px; }
+  .menu-row .price{ font-family:'Space Mono',monospace; color:var(--red); font-size:0.85rem; }
+  .menu-total{ margin-top:26px; text-align:center; font-family:'Space Mono',monospace; font-size:0.85rem; color:rgba(43,10,18,0.6); }
+  .menu-total b{ color:var(--red); font-size:1.1rem; }
+
+  /* ---------- GALLERY (modern bento grid) ---------- */
+  .bento-grid{
+    display:grid; grid-template-columns:repeat(4, 1fr); grid-auto-rows:130px; gap:14px;
+  }
+  .bento-grid img{
+    width:100%; height:100%; object-fit:cover; border-radius:18px; display:block;
+    box-shadow:0 10px 26px rgba(43,10,18,0.10);
+    transition:transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  .bento-grid img:hover{ transform:scale(1.03); box-shadow:0 20px 40px rgba(224,34,63,0.22); }
+  .bento-grid .b-wide{ grid-column:span 2; }
+  .bento-grid .b-tall{ grid-row:span 2; }
+  .bento-grid .b-big{ grid-column:span 2; grid-row:span 2; }
+
+  /* ---------- FAQ ---------- */
+  .faq-item{ border-bottom:1px solid var(--line); padding:24px 0; transition:padding-left 0.25s ease; }
+  .faq-item:hover{ padding-left:10px; }
+  .faq-item h3{ font-size:1.05rem; font-weight:700; font-family:'Work Sans',sans-serif; margin-bottom:8px; }
+  .faq-item p{ font-size:0.92rem; color:rgba(43,10,18,0.72); max-width:640px; }
+
+  /* ---------- FOOTER CTA ---------- */
+  .final-cta{ text-align:center; padding:110px 0 130px; position:relative; }
+  .final-cta h2{ font-size:clamp(2rem,4vw,3.1rem); max-width:640px; margin:0 auto 28px; }
+  .final-cta .btn-primary{ animation:pulseRing 2.4s infinite; }
+
+  footer{ border-top:1px solid var(--line); padding:34px 0; }
+  footer .wrap{ display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:0.82rem; color:rgba(43,10,18,0.5); }
+
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-visual{ order:-1; max-width:280px; margin:0 auto 20px; }
+    .steps{ grid-template-columns:repeat(2,1fr); }
+    .ritual-body{ grid-template-columns:1fr; }
+    .ritual{ padding:46px 26px; }
+    .bento-grid{ grid-template-columns:repeat(2,1fr); grid-auto-rows:150px; }
+    .bento-grid .b-wide, .bento-grid .b-big{ grid-column:span 2; }
+    .menu-card{ padding:34px 26px; }
+  }
+
+  @media (max-width: 480px){
+    .wrap{ padding:0 20px; }
+    nav .wrap{ height:64px; }
+    .brand{ font-size:1.3rem; }
+    header.hero{ padding:56px 0 64px; }
+    .hero-ctas{ flex-direction:column; align-items:stretch; }
+    .hero-ctas a{ text-align:center; }
+    .stat-chip.one{ top:10px; right:10px; }
+    .stat-chip.two{ bottom:10px; right:10px; }
+    section{ padding:64px 0; }
+    .steps{ grid-template-columns:1fr; }
+    .ritual{ padding:36px 20px; border-radius:22px; }
+    .menu-card{ padding:28px 20px; }
+    .bento-grid{ grid-auto-rows:120px; gap:10px; }
+    footer .wrap{ flex-direction:column; gap:8px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 20 C 12 20, 1 13, 1 6.5 C 1 3, 3.7 1, 6.7 1 C 9 1, 11 2.3, 12 4.3 C 13 2.3, 15 1, 17.3 1 C 20.3 1, 23 3, 23 6.5 C 23 13, 12 20, 12 20 Z" fill="#E0223F"/>
+      </svg>
+      blind date <em>dinner</em>
+    </div>
+    <a class="nav-cta" href="#reserve">Reserve a seat</a>
+  </div>
+</nav>
+
+<div class="page">
+
+<header class="hero">
+  <div class="hero-bg-blob blob1"></div>
+  <div class="hero-bg-blob blob2"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow reveal">Maastricht · Tuesday evenings</span>
+      <h1 class="reveal d1">Come find<br>your <span class="accent">match</span><br>tonight.</h1>
+      <p class="lede reveal d2">A dinner for 16 people. Fill in your profile and your interests, and we'll match you with someone great. Come solo, or bring a friend along for the ride.</p>
+      <div class="hero-ctas reveal d3">
+        <a class="btn-primary" href="#reserve">Reserve your seat, €9.80</a>
+        <a class="btn-ghost" href="#gallery">Pictures from past dinners</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal d2">
+      <div class="bow-card" style="background:none; padding:0;">
+        <img src="photo0.jpg" alt="Blind Date Dinner, last event" style="width:100%; height:100%; object-fit:cover; border-radius:24px;">
+        <div class="stat-chip one">Seats<br><b>16</b></div>
+        <div class="stat-chip two">Ticket<br><b>€9.80</b></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">The evening, step by step</span>
+      <h2>Five steps from stranger to match.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal d1"><span class="num">01</span><h3>Reserve your seat</h3><p>Sign up through Luma, that's where you'll fill in your interests, your type, and a photo.</p></div>
+      <div class="step reveal d2"><span class="num">02</span><h3>Bring backup (optional)</h3><p>Not mandatory, but if you'd like, bring a friend, have them reserve a seat too, and you've got your wingman or wing girl for the night.</p></div>
+      <div class="step reveal d3"><span class="num">03</span><h3>Get your colour</h3><p>Girls, you'll be contacted beforehand and told your colour. Guys, you'll get the actual ribbon, in the colour that matches your date, when you arrive.</p></div>
+      <div class="step reveal d4"><span class="num">04</span><h3>Mingle to find it</h3><p>No one's seated yet. Everyone's up, talking, asking "what colour are you?"</p></div>
+      <div class="step reveal d5"><span class="num">05</span><h3>Tie the match</h3><p>Find the girl whose secret colour matches your ribbon. Tie it on her wrist, then sit for dinner.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="cupids">
+  <div class="wrap reveal">
+    <div class="ritual">
+      <span class="eyebrow">Your hosts for tonight</span>
+      <h2>Two Italian roommates, best friends, and your cooks for the night.</h2>
+      <div class="ritual-body">
+        <div class="ritual-copy">
+          <p>We're the ones cooking, setting the table, and running the room, lovely decoration, good music, and a beautiful view from a spot right in the centre of Maastricht. Come find us during the night if you need anything at all.</p>
+          <div class="colour-row">
+            <div class="swatch" style="background:#E0223F"></div>
+            <div class="swatch" style="background:#FF7FA6"></div>
+            <div class="swatch" style="background:#7B4FE0"></div>
+            <div class="swatch" style="background:#F5B942"></div>
+            <div class="swatch" style="background:#3FB6A8"></div>
+            <div class="swatch" style="background:#4F7FE0"></div>
+            <div class="swatch" style="background:#FF8A3D"></div>
+            <div class="swatch" style="background:#D14FD8"></div>
+          </div>
+        </div>
+        <div>
+          <img src="photo1.jpg" alt="Your hosts" style="width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:18px;">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="menu-card reveal">
+      <span class="eyebrow">Cooked, not catered</span>
+      <h2>Two Italian cooks, one long table.</h2>
+      <p class="menu-intro">Every romance needs a strong start, full dinner made fresh, starters through dessert.</p>
+      <div class="menu-row">
+        <div><span class="name">Starters</span><span class="note">Because every romance needs a strong start</span></div>
+      </div>
+      <div class="menu-row">
+        <div><span class="name">Main course</span><span class="note">Delicious Italian spaghetti, tomato sauce, basil, and burrata with Italian olive oil</span></div>
+      </div>
+      <div class="menu-row">
+        <div><span class="name">Sides</span><span class="note">A few Italian sides to go around the table</span></div>
+      </div>
+      <div class="menu-row">
+        <div><span class="name">Dessert</span><span class="note">To sweeten the mood (and your chances)</span></div>
+      </div>
+      <div class="menu-row">
+        <div><span class="name">Drinks</span><span class="note">We'll have red and white wine on the table, bring more to share with your new match if you're after something specific</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">From past dinners</span>
+      <h2>Moments from past events.</h2>
+    </div>
+    <div class="bento-grid">
+      <img class="reveal d1 b-big" src="photo2.jpg" alt="Blind Date Dinner, past events">
+      <img class="reveal d2" src="photo3.jpg" alt="Blind Date Dinner, past events">
+      <img class="reveal d3 b-tall" src="photo4.jpg" alt="Blind Date Dinner, past events">
+      <img class="reveal d3" src="photo5.jpg" alt="Blind Date Dinner, past events">
+      <img class="reveal d4 b-wide" src="photo6.jpg" alt="Blind Date Dinner, past events">
+      <img class="reveal d4" src="photo7.jpg" alt="Blind Date Dinner, past events">
+      <img class="reveal d5 b-tall" src="photo8.jpg" alt="Blind Date Dinner, past events">
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Before you sign up</span>
+      <h2>Good to know.</h2>
+    </div>
+    <div class="faq-item reveal d1"><h3>Do I have to come alone?</h3><p>No, you don't have to. Guys can bring a guy friend who's also single and getting set up, and girls can bring a girlfriend. It's an option in the form, so you're both invited to the same Tuesday night dinner.</p></div>
+    <div class="faq-item reveal d2"><h3>How does the matching actually work?</h3><p>Girls are contacted beforehand and told their colour. Guys get an actual ribbon on arrival, in the colour that matches their date. It's on the guys to go find their match by asking around, see the five steps above.</p></div>
+    <div class="faq-item reveal d3"><h3>What if I have dietary restrictions?</h3><p>Tell us on the sign-up form and the menu will be adjusted for you.</p></div>
+    <div class="faq-item reveal d4"><h3>What happens to my photo and info?</h3><p>It's used only to organise the evening and matching, and deleted afterward.</p></div>
+    <div class="faq-item reveal d5"><h3>How many people come each time?</h3><p>We keep it to 16, enough for a proper mix, small enough that no one gets lost in the room.</p></div>
+  </div>
+</section>
+
+<section class="final-cta" id="reserve">
+  <div class="wrap reveal">
+    <span class="eyebrow">Every Tuesday, Maastricht</span>
+    <h2>Sixteen seats, one dinner, someone new to meet.</h2>
+    <a class="btn-primary" href="#" target="_blank">Reserve your seat on Luma →</a>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>Blind Date Dinner, Maastricht. A student event, Maastricht University only.</span>
+    <span>DM me on Instagram, @emy.piovesana, for any questions.</span>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
